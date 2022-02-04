@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
-import 'package:ramazo_taqvim/core/models/model_praying_times.dart';
+import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';
+import 'package:ramazo_taqvim/core/models/quran_model/quran_model.dart';
 import 'package:ramazo_taqvim/core/network/service_praying_times.dart';
+import 'package:ramazo_taqvim/core/network/service_quran.dart';
 import 'package:ramazo_taqvim/core/utils/constants.dart';
 import 'package:ramazo_taqvim/core/utils/size_config.dart';
 import 'package:ramazo_taqvim/core/widgets/azon_time_container.dart';
@@ -22,7 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final bool _switchValueSaher = false;
 
   List<ModelPrayingTimes>? pray_times;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -36,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
     SizeConfig().init(context);
     return Scaffold(
       key: _scaffoldKey,
-      drawer: DrawerPage(),
+      drawer: const DrawerPage(),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -59,8 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               onPressed: () {
                                 _scaffoldKey.currentState!.openDrawer();
                               },
-                              icon: Icon(Icons.menu),
-                              padding: EdgeInsets.only(left: 0),
+                              icon: const Icon(Icons.menu),
+                              padding: const EdgeInsets.only(left: 0),
                               alignment: Alignment.centerLeft,
                               iconSize: 30,
                             ),
@@ -151,7 +153,11 @@ class _MyHomePageState extends State<MyHomePage> {
           child: FloatingActionButton.extended(
             onPressed: () {
               Box newBox = Boxes.getTime();
+              Box newQuran = Boxes.getQuran();
+
               print(newBox.values.length);
+              print(newQuran.values.length);
+
               Navigator.pushNamed(context, "/countdown");
             },
             icon: const Icon(Icons.keyboard_arrow_right_outlined),
@@ -166,12 +172,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   checkingDataBase() async {
     List<ModelPrayingTimes> datas = [];
-    Box box = Boxes.getTime();
-    if (box.isEmpty) {
+
+    Box boxtime = await Boxes.getTime();
+
+    if (boxtime.isEmpty) {
       await ServicePrayingTimes.getTimes().then((value) => datas = value);
 
       for (ModelPrayingTimes model in datas) {
-        await box.add(model);
+        await boxtime.add(model);
       }
     }
   }

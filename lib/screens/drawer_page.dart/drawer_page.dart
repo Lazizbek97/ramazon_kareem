@@ -97,25 +97,28 @@ class DrawerPage extends StatelessWidget {
                         height: 120,
                         width: 120),
                   ),
-                  ContainerDecoration(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            height: getHeight(60),
-                            width: getHeight(60),
-                            child: Image.asset(ConstantLinks.tasbeh),
-                          ),
-                          Text(
-                            "Tasbeh",
-                            style: TextStyle(
-                                fontSize: ConstantSizes.header_third_size,
-                                fontWeight: FontWeight.w500),
-                          )
-                        ],
-                      ),
-                      height: 120,
-                      width: 120),
+                  InkWell(
+                    onTap: () => Navigator.pushNamed(context, "/tasbeh"),
+                    child: ContainerDecoration(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              height: getHeight(60),
+                              width: getHeight(60),
+                              child: Image.asset(ConstantLinks.tasbeh),
+                            ),
+                            Text(
+                              "Tasbeh",
+                              style: TextStyle(
+                                  fontSize: ConstantSizes.header_third_size,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        ),
+                        height: 120,
+                        width: 120),
+                  ),
                 ],
               ),
               SizedBox(
@@ -124,30 +127,34 @@ class DrawerPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ContainerDecoration(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            height: getHeight(50),
-                            width: getHeight(60),
-                            child: Image.asset(ConstantLinks.muborak_days),
-                          ),
-                          SizedBox(
-                            height: getHeight(30),
-                            width: getHeight(80),
-                            child: AutoSizeText(
-                              "Muborak Kunlar",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: ConstantSizes.header_third_size,
-                                  fontWeight: FontWeight.w500),
+                  InkWell(
+                    onTap: () =>
+                        Navigator.pushNamed(context, "/muborak_kunlar"),
+                    child: ContainerDecoration(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              height: getHeight(50),
+                              width: getHeight(60),
+                              child: Image.asset(ConstantLinks.muborak_days),
                             ),
-                          ),
-                        ],
-                      ),
-                      height: 120,
-                      width: 120),
+                            SizedBox(
+                              height: getHeight(30),
+                              width: getHeight(80),
+                              child: AutoSizeText(
+                                "Muborak Kunlar",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: ConstantSizes.header_third_size,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ],
+                        ),
+                        height: 120,
+                        width: 120),
+                  ),
                   ContainerDecoration(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

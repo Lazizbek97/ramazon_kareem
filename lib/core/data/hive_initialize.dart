@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:hive/hive.dart';
 import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
-import 'package:ramazo_taqvim/core/models/model_praying_times.dart';
-// import 'package:ramazo_taqvim/core/models/model_time.dart';
+import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';
+import 'package:ramazo_taqvim/core/models/quran_model/quran_in_arabian.dart';
+import 'package:ramazo_taqvim/core/models/quran_model/quran_model.dart';
 
 class InitializeHive {
   // static Box box;
@@ -11,15 +12,13 @@ class InitializeHive {
     Hive.init(file_path.path);
     Hive.registerAdapter(ModelPrayingTimesAdapter());
     Hive.registerAdapter(TimesAdapter());
+    Hive.registerAdapter(QuranArabianModelAdapter());
+    Hive.registerAdapter(AyahAdapter());
+    Hive.registerAdapter(QuranInArabianModelAdapter());
+    Hive.registerAdapter(OyatAdapter());
 
     await Hive.openBox<ModelPrayingTimes>("nomoz_vaqtlari");
-  }
-
-  static addToHive(List<ModelPrayingTimes> datas) async {
-    Box box = Boxes.getTime();
-    box.clear();
-    for (var item in datas) {
-      await box.add(item);
-    }
+    await Hive.openBox<QuranArabianModel>("quran");
+    await Hive.openBox<QuranInArabianModel>("quran_in_arabian");
   }
 }

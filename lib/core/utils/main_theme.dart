@@ -14,7 +14,7 @@ class MainTheme {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),
-      scaffoldBackgroundColor: const Color(0xffF5F7F9),
+      scaffoldBackgroundColor: const Color(0xffE1F3F6),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,

@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
+import 'package:ramazo_taqvim/core/models/quran_model/quran_in_arabian.dart';
+import 'package:ramazo_taqvim/core/models/quran_model/quran_model.dart';
+import 'package:ramazo_taqvim/core/network/service_quran.dart';
+import 'package:ramazo_taqvim/core/utils/constants.dart';
 
 class QuranPage extends StatefulWidget {
   const QuranPage({Key? key}) : super(key: key);
@@ -8,6 +14,16 @@ class QuranPage extends StatefulWidget {
 }
 
 class _QuranPageState extends State<QuranPage> {
+  Box? boxQuran;
+  Box? boxQuranInArabian;
+
+  @override
+  void initState() {
+    boxQuran = Boxes.getQuran();
+    boxQuranInArabian = Boxes.getQuranInArabian();
+    (boxQuran!.isEmpty || boxQuranInArabian!.isEmpty) ? reloadQuran() : null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +31,8 @@ class _QuranPageState extends State<QuranPage> {
         title: const Text("Quran Kareem"),
         centerTitle: true,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () =>
+              Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false),
           icon: const Icon(Icons.home_outlined),
           iconSize: 30,
         ),
@@ -27,33 +44,64 @@ class _QuranPageState extends State<QuranPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.08,
               width: double.infinity,
-              child: SearchField(),
+              child: const SearchField(),
             ),
             Expanded(
-              // width: double.infinity,
               child: ListView.separated(
-                  itemCount: 30,
-                  separatorBuilder: (context, index) => Divider(
-                        color: Colors.grey,
+                itemCount: boxQuran!.values.length,
+                separatorBuilder: (context, index) => Divider(
+                  color: ConstantColors.divider_color,
+                ),
+                itemBuilder: (context, index) {
+                  QuranArabianModel sura = boxQuran!.values.toList()[index];
+                  QuranInArabianModel suraInAranian =
+                      boxQuranInArabian!.values.toList()[index];
+                  return InkWell(
+                    onTap: () => Navigator.pushNamed(context, "/sura",
+                        arguments: [sura, suraInAranian]),
+                    child: ListTile(
+                      shape: const RoundedRectangleBorder(),
+                      leading: CircleAvatar(
+                        radius: 30,
+                        backgroundColor: Colors.transparent,
+                        child: Stack(
+                          children: [
+                            Center(child: Image.asset(ConstantLinks.frame)),
+                            Center(
+                              child: Text(
+                                sura.number.toString(),
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () => Navigator.pushNamed(context, "/sura"),
-                      child: const ListTile(
-                        // tileColor: Colors.teal,
-                        shape: RoundedRectangleBorder(),
-                        leading: Icon(Icons.circle_outlined),
-                        title: Text("Al-Fatihah"),
-                        subtitle: Text("Meccan -7 Verses"),
-                        trailing: Text("Arabian Name"),
-                      ),
-                    );
-                  }),
+                      title: Text(sura.englishName.toString()),
+                      subtitle: Text(sura.revelationType.toString()),
+                      trailing: Text(sura.name.toString()),
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  reloadQuran() async {
+    List<QuranArabianModel> quran = [];
+    List<QuranInArabianModel> quranInArabian = [];
+
+    await ServiceQuran.getQuran().then((value) => quran = value);
+    await ServiceQuran.getQuranInArabian()
+        .then((value) => quranInArabian = value);
+
+    for (var i = 0; i < quran.length; i++) {
+      await boxQuran!.add(quran[i]);
+      await boxQuranInArabian!.add(quranInArabian[i]);
+    }
   }
 }
 
