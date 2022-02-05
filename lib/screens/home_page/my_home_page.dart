@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:hive/hive.dart';
 import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
 import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';

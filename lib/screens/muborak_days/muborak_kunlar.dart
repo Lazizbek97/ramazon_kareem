@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:ramazo_taqvim/core/data/offline_data.dart';
 import 'package:ramazo_taqvim/core/utils/constants.dart';
 import 'package:ramazo_taqvim/core/utils/size_config.dart';
-import 'package:ramazo_taqvim/core/widgets/container_decoration.dart';
 
 class MuborakKunlarPage extends StatefulWidget {
   const MuborakKunlarPage({Key? key}) : super(key: key);
@@ -33,29 +32,26 @@ class _MuborakKunlarPageState extends State<MuborakKunlarPage> {
         child: ListView.builder(
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            child: Container(
-              child: ExpansionTile(
-                title: AutoSizeText(
-                  diniyKunalar[index].nomi,
-                  maxFontSize: ConstantSizes.header_third_size,
-                  style: TextStyle(
-                    fontSize: ConstantSizes.header_third_size,
-                    fontWeight: FontWeight.w700,
-                  ),
+            child: ExpansionTile(
+              title: AutoSizeText(
+                diniyKunalar[index].nomi,
+                style: TextStyle(
+                  fontSize: ConstantSizes.header_third_size,
+                  fontWeight: FontWeight.w700,
                 ),
-                children: [
-                  SizedBox(
-                    child: SingleChildScrollView(
-                      child: Text(
-                        diniyKunalar[index].haqida,
-                        style: TextStyle(
-                            fontSize: ConstantSizes.header_third_size),
-                      ),
-                    ),
-                  )
-                ],
-                subtitle: Text(diniyKunalar[index].sanasi),
               ),
+              children: [
+                SizedBox(
+                  child: SingleChildScrollView(
+                    child: Text(
+                      diniyKunalar[index].haqida,
+                      style:
+                          TextStyle(fontSize: ConstantSizes.header_third_size),
+                    ),
+                  ),
+                )
+              ],
+              subtitle: Text(diniyKunalar[index].sanasi),
             ),
           ),
           itemCount: diniyKunalar.length,

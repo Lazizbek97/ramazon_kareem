@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ramazo_taqvim/core/utils/constants.dart';
 import 'package:ramazo_taqvim/core/utils/size_config.dart';
 import 'package:ramazo_taqvim/core/widgets/container_decoration.dart';
+import 'package:ramazo_taqvim/screens/countdown_page.dart/countdown.dart';
 
 class DrawerPage extends StatelessWidget {
   const DrawerPage({
@@ -223,30 +224,38 @@ class DrawerPage extends StatelessWidget {
                         height: 120,
                         width: 120),
                   ),
-                  ContainerDecoration(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            height: getHeight(50),
-                            width: getHeight(60),
-                            child: Image.asset(ConstantLinks.masjid),
-                          ),
-                          SizedBox(
-                            height: getHeight(30),
-                            width: getHeight(80),
-                            child: AutoSizeText(
-                              "Masjidlar",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: ConstantSizes.header_third_size,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ],
+                  InkWell(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ContdownTime(),
                       ),
-                      height: 120,
-                      width: 120),
+                    ),
+                    child: ContainerDecoration(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              height: getHeight(50),
+                              width: getHeight(60),
+                              child: Image.asset(ConstantLinks.masjid),
+                            ),
+                            SizedBox(
+                              height: getHeight(30),
+                              width: getHeight(80),
+                              child: AutoSizeText(
+                                "Masjidlar",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: ConstantSizes.header_third_size,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ],
+                        ),
+                        height: 120,
+                        width: 120),
+                  ),
                 ],
               ),
               SizedBox(

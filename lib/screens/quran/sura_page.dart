@@ -136,7 +136,9 @@ class SuraPage extends StatelessWidget {
                         child: AutoSizeText(
                           suraInArabian.ayahs![index].text.toString(),
                           textDirection: TextDirection.rtl,
-                          minFontSize: ConstantSizes.quran_in_arabian_size,
+                          style: TextStyle(
+                            fontSize: ConstantSizes.quran_in_arabian_size,
+                          ),
                         ),
                       ),
                       Container(

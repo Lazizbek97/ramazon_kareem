@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart';
 import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';
 import 'package:ramazo_taqvim/core/utils/constants.dart';
 import 'package:ramazo_taqvim/core/utils/size_config.dart';
@@ -16,13 +17,59 @@ class CountdownPage extends StatefulWidget {
 
 class _CountdownPageState extends State<CountdownPage> {
   bool switchValue = false;
+  DateTime currentTime = DateTime.now();
+  int? remainedMinutes;
+  int? intervalMinutes;
+
   List<String>? times;
   List<String> names = ['Quyosh', 'Bomdod', 'Peshin', 'Asr', 'Shom', 'Xufton'];
+  DateFormat formatTime = DateFormat("Hm");
 
   @override
   void initState() {
+    var nowString = "${currentTime.hour}:${currentTime.minute}";
+
+    DateTime now = stringToDateTime(nowString);
+
     times = widget.today.times!.toJson().values.cast<String>().toList();
-    print(times);
+    late int t1;
+
+    for (var time in times!) {
+      DateTime t = stringToDateTime(time);
+      now.isAfter(t) ? t1 = times!.indexOf(time) : null;
+    }
+
+    timeDifference(times![t1], times![t1 + 1]);
+    print(names[t1]);
+  }
+
+  stringToDateTime(String text) {
+    DateFormat format = DateFormat("HH:mm");
+    return format.parse(text);
+  }
+
+  timeDifference(String from, String to) {
+    DateFormat format = DateFormat("HH:mm");
+
+    var start = format.parse(from);
+    var end = format.parse(to);
+    var nowString = "${currentTime.hour}:${currentTime.minute}";
+    var now = format.parse(nowString);
+
+    Duration diff = end.difference(start);
+
+    Duration difToPray = end.difference(now);
+
+    remainedMinutes = difToPray.inMinutes;
+    intervalMinutes = diff.inMinutes;
+
+    if (!(intervalMinutes! >= remainedMinutes!)) {
+      intervalMinutes = intervalMinutes! + 1;
+    }
+    print(intervalMinutes);
+    print(remainedMinutes);
+
+    return diff.inHours;
   }
 
   @override
@@ -45,14 +92,15 @@ class _CountdownPageState extends State<CountdownPage> {
               child: Stack(
                 children: [
                   Center(
-                    child: TimeCircularCountdown(
-                      unit: CountdownUnit.second,
-                      countdownTotal: 100,
+                    child: CircularCountdown(
+                      countdownTotal: intervalMinutes!,
+                      countdownRemaining: remainedMinutes,
+
                       countdownCurrentColor: Colors.black,
                       countdownRemainingColor: Colors.grey,
                       countdownTotalColor: Colors.grey.shade300,
                       diameter: getWidth(280),
-                      repeat: true,
+                      // repeat: true,
                       strokeWidth: 30,
                       gapFactor: 1.7,
                     ),
@@ -131,7 +179,7 @@ class _CountdownPageState extends State<CountdownPage> {
           width: getWidth(210),
           child: FloatingActionButton.extended(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
             },
             icon: const Icon(Icons.keyboard_arrow_left_outlined),
             label: const Center(
