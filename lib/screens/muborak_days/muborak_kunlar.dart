@@ -23,6 +23,7 @@ class _MuborakKunlarPageState extends State<MuborakKunlarPage> {
           width: double.infinity,
           child: Text(
             "${DateTime.now().year} yil uchun Xijriy muborak sanalar",
+            style: TextStyle(fontSize: ConstantSizes.app_bar_size),
             maxLines: 2,
             textAlign: TextAlign.center,
           ),

@@ -155,36 +155,39 @@ class DrawerPage extends StatelessWidget {
                         height: 120,
                         width: 120),
                   ),
-                  ContainerDecoration(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            height: getHeight(50),
-                            width: getHeight(60),
-                            child: Text(
-                              "99",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: ConstantSizes.header_second_size,
-                                  fontWeight: FontWeight.w500),
+                  InkWell(
+                    onTap: () => Navigator.pushNamed(context, "/ismlar"),
+                    child: ContainerDecoration(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              height: getHeight(50),
+                              width: getHeight(60),
+                              child: Text(
+                                "99",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: ConstantSizes.header_second_size,
+                                    fontWeight: FontWeight.w500),
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: getHeight(30),
-                            width: getHeight(80),
-                            child: AutoSizeText(
-                              "Ollohning ismlari",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: ConstantSizes.header_third_size,
-                                  fontWeight: FontWeight.w500),
+                            SizedBox(
+                              height: getHeight(30),
+                              width: getHeight(80),
+                              child: AutoSizeText(
+                                "Ollohning ismlari",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: ConstantSizes.header_third_size,
+                                    fontWeight: FontWeight.w500),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      height: 120,
-                      width: 120),
+                          ],
+                        ),
+                        height: 120,
+                        width: 120),
+                  ),
                 ],
               ),
               SizedBox(
@@ -193,30 +196,33 @@ class DrawerPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ContainerDecoration(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            height: getHeight(50),
-                            width: getHeight(60),
-                            child: Image.asset(ConstantLinks.qibla),
-                          ),
-                          SizedBox(
-                            height: getHeight(30),
-                            width: getHeight(80),
-                            child: AutoSizeText(
-                              "Qibla",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: ConstantSizes.header_third_size,
-                                  fontWeight: FontWeight.w500),
+                  InkWell(
+                    onTap: () => Navigator.pushNamed(context, "/qibla"),
+                    child: ContainerDecoration(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              height: getHeight(50),
+                              width: getHeight(60),
+                              child: Image.asset(ConstantLinks.qibla),
                             ),
-                          ),
-                        ],
-                      ),
-                      height: 120,
-                      width: 120),
+                            SizedBox(
+                              height: getHeight(30),
+                              width: getHeight(80),
+                              child: AutoSizeText(
+                                "Qibla",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: ConstantSizes.header_third_size,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ],
+                        ),
+                        height: 120,
+                        width: 120),
+                  ),
                   ContainerDecoration(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:hive/hive.dart';
 import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
 import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';
-import 'package:ramazo_taqvim/core/models/quran_model/quran_model.dart';
 import 'package:ramazo_taqvim/core/network/service_praying_times.dart';
-import 'package:ramazo_taqvim/core/network/service_quran.dart';
 import 'package:ramazo_taqvim/core/utils/constants.dart';
 import 'package:ramazo_taqvim/core/utils/size_config.dart';
 import 'package:ramazo_taqvim/core/widgets/azon_time_container.dart';
 import 'package:ramazo_taqvim/core/widgets/container_decoration.dart';
 import 'package:ramazo_taqvim/core/widgets/iftar_saher_container.dart';
 import 'package:ramazo_taqvim/screens/drawer_page.dart/drawer_page.dart';
+import 'package:intl/intl.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -22,15 +22,24 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final bool _switchValueIftar = false;
   final bool _switchValueSaher = false;
+  final format = DateFormat("dd-MM-yyyy");
 
+  final now = DateTime.now();
   List<ModelPrayingTimes>? pray_times;
+  ModelPrayingTimes? today;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    // Agar DataBase da ma'lumot bo'lsa ushandan malumot olib keladi, aks holda so'rov junatib databaseni to'ldiradi
+    //* Agar DataBase da ma'lumot bo'lsa ushandan malumot olib keladi, aks holda so'rov junatib databaseni to'ldiradi
     checkingDataBase();
     pray_times = Boxes.getTime().values.toList();
+
+    // *Bugungi sana bo'yicha vaqtlar
+    for (var e in pray_times!) {
+      format.format(now) == format.format(e.date!) ? today = e : null;
+    }
+    print(today!.date);
   }
 
   @override
@@ -105,8 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ContainerDecoration(
                             child: IftarSaharAlert(
                               sub_text: "Iftorlik Vaqti",
-                              time:
-                                  pray_times![3].times!.tongSaharlik.toString(),
+                              time: today!.times!.shomIftor.toString(),
                               icon: Icon(
                                 Icons.light_mode_outlined,
                                 size: ConstantSizes.icon_size,
@@ -119,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ContainerDecoration(
                             child: IftarSaharAlert(
                               sub_text: "Saharlik Vaqti",
-                              time: pray_times![3].times!.shomIftor.toString(),
+                              time: today!.times!.tongSaharlik.toString(),
                               icon: Icon(
                                 Icons.nights_stay_outlined,
                                 size: ConstantSizes.icon_size,
@@ -152,13 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
           width: getWidth(210),
           child: FloatingActionButton.extended(
             onPressed: () {
-              Box newBox = Boxes.getTime();
-              Box newQuran = Boxes.getQuran();
-
-              print(newBox.values.length);
-              print(newQuran.values.length);
-
-              Navigator.pushNamed(context, "/countdown");
+              Navigator.pushNamed(context, "/countdown", arguments: today);
             },
             icon: const Icon(Icons.keyboard_arrow_right_outlined),
             label: const Center(
@@ -175,11 +177,36 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Box boxtime = await Boxes.getTime();
 
+    // * DataBase bo'sh bo'lganda yangisini olib keladi va to'ldiradi
     if (boxtime.isEmpty) {
+      print("1");
       await ServicePrayingTimes.getTimes().then((value) => datas = value);
-
+      // * sanalarni ketma ketlik bo'yicha sortlaymiz
+      datas.sort((a, b) {
+        var aDate = a.date;
+        var bDate = b.date;
+        return aDate!.compareTo(bDate!);
+      });
       for (ModelPrayingTimes model in datas) {
         await boxtime.add(model);
+      }
+    } else {
+      // * DataBase dagi ma'lumotlar joriy oyga tegishlimi yoki eski tekshiradi agar eski bo'lsa boshqatdan yozadi
+      if (DateFormat('MM').format(now) !=
+          DateFormat('MM').format(boxtime.values.toList().last.date!)) {
+        print("object");
+        await boxtime.clear();
+        await ServicePrayingTimes.getTimes().then((value) => datas = value);
+        // * sanalarni ketma ketlik bo'yicha sortlaymiz
+        datas.sort((a, b) {
+          var aDate = a.date;
+          var bDate = b.date;
+          return aDate!.compareTo(bDate!);
+        });
+
+        for (ModelPrayingTimes model in datas) {
+          await boxtime.add(model);
+        }
       }
     }
   }

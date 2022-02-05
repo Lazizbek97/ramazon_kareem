@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 class ServiceQuran {
   static var url = Uri.parse("http://api.alquran.cloud/v1/quran/uz.sodik");
-  static var urlInAranian =
+  static var urlInArabian =
       Uri.parse("http://api.alquran.cloud/v1/quran/quran-uthmani");
 
   static Future<List<QuranArabianModel>> getQuran() async {
@@ -25,7 +25,7 @@ class ServiceQuran {
   }
 
   static Future<List<QuranInArabianModel>> getQuranInArabian() async {
-    var response = await http.get(urlInAranian);
+    var response = await http.get(urlInArabian);
 
     var res = jsonDecode(response.body);
 

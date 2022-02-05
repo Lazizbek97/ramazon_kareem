@@ -29,6 +29,8 @@ class _QuranPageState extends State<QuranPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Quran Kareem"),
+        titleTextStyle: TextStyle(
+            fontSize: ConstantSizes.app_bar_size, color: Colors.black),
         centerTitle: true,
         leading: IconButton(
           onPressed: () =>

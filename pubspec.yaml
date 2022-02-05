@@ -44,6 +44,20 @@ dependencies:
   hive_generator: ^1.1.2
   path_provider: ^2.0.8
   http: ^0.13.4
+  flash_card: ^0.0.7
+  carousel_slider: ^4.0.0
+  intl: ^0.17.0
+  timezone: ^0.8.0
+  flutter_local_notifications: ^9.2.0
+  flutter_native_timezone: ^2.0.0
+  rxdart: ^0.27.3
+  android_alarm_manager_plus: ^2.0.4
+  
+  
+  
+  
+  
+  
   
 
 dev_dependencies:

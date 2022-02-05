@@ -1,14 +1,16 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:ramazo_taqvim/core/utils/size_config.dart';
 
 class ConstantSizes {
-  static double hearder_one_size = 45;
-  static double header_second_size = 40;
-  static double header_third_size = 17;
-  static double quran_in_arabian_size = 25;
+  static double hearder_one_size = getHeight(45);
+  static double header_second_size = getHeight(40);
+  static double header_third_size = getHeight(17);
+  static double quran_in_arabian_size = getHeight(25);
+  static double app_bar_size = getHeight(24);
 
-  static double icon_size = 33;
+  static double icon_size = getHeight(33);
 }
 
 class ConstantColors {
@@ -31,4 +33,5 @@ class ConstantLinks {
   static String bismillah = "assets/svg_images/bismillah.png";
   static String frame = "assets/svg_images/frame.png";
   static String tasbeh_gif = "assets/svg_images/tasbeh_gif.gif";
+  static String qiblah = "assets/svg_images/qiblah.png";
 }

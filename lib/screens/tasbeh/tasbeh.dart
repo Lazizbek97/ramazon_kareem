@@ -25,8 +25,9 @@ class _Tasbeh extends State<Tasbeh> {
       backgroundColor:
           is_dark ? ConstantColors.scaffold_background : Colors.black,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Tasbeh",
+          style: TextStyle(fontSize: ConstantSizes.app_bar_size),
         ),
         centerTitle: true,
         elevation: 0,

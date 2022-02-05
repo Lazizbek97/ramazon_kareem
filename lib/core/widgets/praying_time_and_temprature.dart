@@ -30,7 +30,7 @@ class PrayTime_Tempr extends StatelessWidget {
         Text(
           text,
           style: TextStyle(
-            fontSize: ConstantSizes.header_second_size,
+            fontSize: 30,
             fontWeight: FontWeight.w600,
           ),
         ),
