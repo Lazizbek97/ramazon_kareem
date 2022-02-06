@@ -1,4 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive/hive.dart';
 import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
@@ -84,56 +86,53 @@ class _AzonTimesState extends State<AzonTimes> {
           vaqt: 1,
           nomoz_vaqti: alarms[0],
           update: _update,
-          // isNotified: alarms[0].bomdod,
         ),
         Nomoz_Time_Notifier(
           text: "Quyosh",
           vaqt: 2,
           nomoz_vaqti: alarms[1],
           update: _update,
-
-          // isNotified: alarms[0].quyosh,
         ),
         Nomoz_Time_Notifier(
           text: "Peshin",
           vaqt: 3,
           nomoz_vaqti: alarms[2],
           update: _update,
-
-          // isNotified: alarms[0].peshin,
         ),
         Nomoz_Time_Notifier(
           text: "Asr",
           vaqt: 4,
           nomoz_vaqti: alarms[3],
           update: _update,
-
-          // isNotified: alarms[0].asr,
         ),
         Nomoz_Time_Notifier(
           text: "Shom",
           vaqt: 5,
           nomoz_vaqti: alarms[4],
           update: _update,
-
-          // isNotified: alarms[0].shom,
         ),
         Nomoz_Time_Notifier(
           text: "Xufton",
           vaqt: 6,
           nomoz_vaqti: alarms[5],
           update: _update,
-
-          // isNotified: alarms[0].xufton,
         ),
         const SizedBox(height: 10),
-        Text(
-          "Nomoz vaqtlari",
-          style: TextStyle(
-            color: ConstantColors.bottom_text_color,
-            fontSize: ConstantSizes.header_third_size,
-          ),
-        ),
+        SizedBox(
+            height: 25,
+            width: double.infinity,
+            child: Row(
+              children: [
+                AutoSizeText(
+                  "${widget.nomoz_vaqti.region} ",
+                  style: TextStyle(
+                    color: ConstantColors.bottom_text_color,
+                    fontSize: ConstantSizes.header_third_size,
+                  ),
+                ),
+                const Icon(Icons.location_on_outlined)
+              ],
+            )),
       ],
     );
   }

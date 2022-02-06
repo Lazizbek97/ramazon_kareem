@@ -19,6 +19,8 @@ class SetNotifications {
       joriy_nomoz_vaqti.minute,
     );
 
+    print(newNotification);
+
     Notifications.showNotificationScheduledDailyBasis(
       id: id,
       title: title,

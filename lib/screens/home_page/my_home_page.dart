@@ -193,12 +193,14 @@ class _MyHomePageState extends State<MyHomePage> {
   checkingDataBase() async {
     List<ModelPrayingTimes> datas = [];
 
-    Box boxtime = await Boxes.getTime();
+    Box<ModelPrayingTimes> boxtime = Boxes.getTime();
 
     // * DataBase bo'sh bo'lganda yangisini olib keladi va to'ldiradi
     if (boxtime.isEmpty) {
       print("1");
-      await ServicePrayingTimes.getTimes().then((value) => datas = value);
+      // TODO viloyat nomini parametr sifatida jo'nat
+      await ServicePrayingTimes.getTimes("toshkent")
+          .then((value) => datas = value);
       // * sanalarni ketma ketlik bo'yicha sortlaymiz
       datas.sort((a, b) {
         var aDate = a.date;
@@ -213,8 +215,11 @@ class _MyHomePageState extends State<MyHomePage> {
       if (DateFormat('MM').format(now) !=
           DateFormat('MM').format(boxtime.values.toList().last.date!)) {
         print("object");
+        await ServicePrayingTimes.getTimes(
+                boxtime.values.first.region.toString())
+            .then((value) => datas = value);
         await boxtime.clear();
-        await ServicePrayingTimes.getTimes().then((value) => datas = value);
+
         // * sanalarni ketma ketlik bo'yicha sortlaymiz
         datas.sort((a, b) {
           var aDate = a.date;

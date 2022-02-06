@@ -2,7 +2,7 @@ class Locations {
   static List viloyatlar = [
     'Toshkent',
     'Andijon',
-    'Fargona',
+    'Farg\'оna',
     'Namangan',
     'Jizzax',
     'Samarqand',
@@ -11,6 +11,7 @@ class Locations {
     'Navoiy',
     'Buxoro',
     'Urganch',
-    'Qoraqalpogiston',
+    'Guliston',
+    'Nukus',
   ];
 }

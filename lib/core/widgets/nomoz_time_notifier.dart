@@ -74,7 +74,6 @@ class _Nomoz_Time_NotifierState extends State<Nomoz_Time_Notifier> {
               dense: true,
               onTap: () async {
                 changeedValue = await snap.data;
-                // AzonTimes.switchValue = snap.data;
                 print(snap.data);
 
                 await updateBox(widget.vaqt);

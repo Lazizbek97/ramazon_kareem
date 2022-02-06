@@ -1,12 +1,14 @@
 //import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
 import 'package:ramazo_taqvim/core/data/locations.dart';
+import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';
+import 'package:ramazo_taqvim/core/network/service_praying_times.dart';
 
 class LocationSearchPage extends SearchDelegate {
-  // List<TaskModel> my_tasks = Boxes.getTask().values.toList();
-  // TaskModel? new_result;
-  // int? task_index;
+  Box<ModelPrayingTimes> pray_times = Boxes.getTime();
 
   @override
   List<Widget>? buildActions(BuildContext context) => [
@@ -28,11 +30,7 @@ class LocationSearchPage extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     // task_index = my_tasks.indexOf(new_result!);
 
-    return Scaffold();
-    //  SearchResult(
-    // task: new_result!,
-    // index: task_index!,
-    // );
+    return Container();
   }
 
   @override
@@ -46,12 +44,27 @@ class LocationSearchPage extends SearchDelegate {
         itemCount: suggestions.length,
         itemBuilder: (context, index) {
           return ListTile(
-            onTap: () {
-              // new_result = suggestions[index];
+            onTap: () async {
               query = suggestions[index];
-              // showResults(context);
+              // TODO home pagega qaytish, nomoz vaqtlarini o'zgartirib
+              List<ModelPrayingTimes> datas = [];
+
+              await pray_times.clear();
+              await ServicePrayingTimes.getTimes(query)
+                  .then((value) => datas = value);
+              // * sanalarni ketma ketlik bo'yicha sortlaymiz
+              datas.sort((a, b) {
+                var aDate = a.date;
+                var bDate = b.date;
+                return aDate!.compareTo(bDate!);
+              });
+              for (ModelPrayingTimes model in datas) {
+                await pray_times.add(model);
+              }
+
+              Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
             },
-            title: Text(suggestions[index]),
+            title: Text("${suggestions[index]} nomoz vaqtlariga o'tish"),
           );
         });
   }

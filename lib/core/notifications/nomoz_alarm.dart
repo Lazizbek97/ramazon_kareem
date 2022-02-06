@@ -88,7 +88,7 @@ class Notifications {
       );
 
 // ? Notifacations Daily Basis
-
+// TODO berilgan kunning vaqtiga notification qo'yish zarur!!!!
   static showNotificationScheduledDailyBasis({
     int id = 0,
     String? title,
@@ -102,9 +102,8 @@ class Notifications {
         title,
         body,
         // * dailyNotifications
-        await _scheduleDaily(
-          Time(scheduledDate.hour, scheduledDate.minute + 1),
-        ),
+        await tz.TZDateTime(tz.local, scheduledDate.year, scheduledDate.month,
+            scheduledDate.hour, scheduledDate.minute),
         // ),
         // * weeklyNOtifications
         // await _weeklySchedule(Time(11),
@@ -116,9 +115,9 @@ class Notifications {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         // * DailySchedule
-        // matchDateTimeComponents: DateTimeComponents.time,
+        matchDateTimeComponents: DateTimeComponents.time,
         // * WeeklySchedule
-        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+        // matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
       );
 
   // ? yordamchi funksiyalar | tepada chaqirib ishlatilgan

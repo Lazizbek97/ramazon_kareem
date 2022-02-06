@@ -63,8 +63,8 @@ class _IftarAlertState extends State<IftarSaharAlert> {
         ),
         Text(
           widget.sub_text == "Saharlik Vaqti"
-              ? "0${saharlik!.hour}:0${saharlik!.minute}"
-              : "${iftorlik!.hour}:${iftorlik!.minute}",
+              ? "${saharlik!.hour.toString().length == 1 ? '0' + saharlik!.hour.toString() : saharlik!.hour}:${saharlik!.minute.toString().length == 1 ? '0' + saharlik!.minute.toString() : saharlik!.minute}"
+              : "${iftorlik!.hour.toString().length == 1 ? '0' + iftorlik!.hour.toString() : iftorlik!.hour}:${iftorlik!.minute.toString().length == 1 ? '0' + iftorlik!.minute.toString() : iftorlik!.minute}",
           style: TextStyle(
             fontSize: ConstantSizes.header_second_size,
             fontWeight: FontWeight.bold,
