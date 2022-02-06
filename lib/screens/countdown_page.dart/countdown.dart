@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 
@@ -29,25 +28,3 @@ class _ContdownTimeState extends State<ContdownTime> {
     );
   }
 }
-
-//   Widget buildItem(String title, Widget page) {
-//     return GestureDetector(
-//       onTap: () {
-//         Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-//           return page;
-//         }));
-//       },
-//       child: Container(
-//         margin: const EdgeInsets.all(5),
-//         color: Colors.blue,
-//         width: double.infinity,
-//         alignment: Alignment.center,
-//         height: 100,
-//         child: Text(
-//           title,
-//           style: TextStyle(fontSize: 36),
-//         ),
-//       ),
-//     );
-//   }
-// }

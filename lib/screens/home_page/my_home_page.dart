@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
+import 'package:ramazo_taqvim/core/models/alarms/alarms.dart';
 import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';
 import 'package:ramazo_taqvim/core/network/service_praying_times.dart';
 import 'package:ramazo_taqvim/core/utils/constants.dart';
@@ -27,9 +28,11 @@ class _MyHomePageState extends State<MyHomePage> {
   List<ModelPrayingTimes>? pray_times;
   ModelPrayingTimes? today;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
+    // * Hive Alarm Box checking
+
+    checkAlarmBox();
     //* Agar DataBase da ma'lumot bo'lsa ushandan malumot olib keladi, aks holda so'rov junatib databaseni to'ldiradi
     checkingDataBase();
     pray_times = Boxes.getTime().values.toList();
@@ -38,7 +41,6 @@ class _MyHomePageState extends State<MyHomePage> {
     for (var e in pray_times!) {
       format.format(now) == format.format(e.date!) ? today = e : null;
     }
-    print(today!.date);
   }
 
   @override
@@ -113,12 +115,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           ContainerDecoration(
                             child: IftarSaharAlert(
                               sub_text: "Iftorlik Vaqti",
-                              time: today!.times!.shomIftor.toString(),
                               icon: Icon(
                                 Icons.light_mode_outlined,
                                 size: ConstantSizes.icon_size,
                               ),
-                              switchValue: _switchValueIftar,
+                              rozaVaqti: today!,
                             ),
                             height: 210,
                             width: 155,
@@ -126,12 +127,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           ContainerDecoration(
                             child: IftarSaharAlert(
                               sub_text: "Saharlik Vaqti",
-                              time: today!.times!.tongSaharlik.toString(),
                               icon: Icon(
                                 Icons.nights_stay_outlined,
                                 size: ConstantSizes.icon_size,
                               ),
-                              switchValue: _switchValueSaher,
+                              rozaVaqti: today!,
                             ),
                             height: 210,
                             width: 155,
@@ -139,7 +139,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                       ContainerDecoration(
-                        child: AzonTimes(),
+                        child: AzonTimes(
+                          nomoz_vaqti: today!,
+                        ),
                         height: 470,
                         width: 170,
                       ),
@@ -169,6 +171,23 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  checkAlarmBox() async {
+    // *Opening Alarm HiveBox
+    Box alarmBox = Boxes.getAlarm();
+    if (alarmBox.isEmpty) {
+      final newAlarm = AlarmModel(
+          saharlik: false,
+          iftorlik: false,
+          bomdod: false,
+          quyosh: false,
+          peshin: false,
+          asr: false,
+          shom: false,
+          xufton: false);
+      await alarmBox.add(newAlarm);
+    }
   }
 
   checkingDataBase() async {

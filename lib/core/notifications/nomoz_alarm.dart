@@ -121,7 +121,7 @@ class Notifications {
         matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
       );
 
-  // ?-----------------------------------------
+  // ? yordamchi funksiyalar | tepada chaqirib ishlatilgan
   static tz.TZDateTime _scheduleDaily(Time time) {
     final now = tz.TZDateTime.now(tz.local);
     final scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, now.day,
@@ -140,5 +140,11 @@ class Notifications {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
     return scheduledDate;
+  }
+
+  // ? Cancel Specific Notifications
+
+  static cancelNotification(int id) async {
+    await _notification.cancel(id);
   }
 }

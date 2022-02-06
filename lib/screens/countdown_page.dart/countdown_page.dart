@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
 import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';
 import 'package:ramazo_taqvim/core/utils/constants.dart';
 import 'package:ramazo_taqvim/core/utils/size_config.dart';
@@ -18,58 +19,20 @@ class CountdownPage extends StatefulWidget {
 class _CountdownPageState extends State<CountdownPage> {
   bool switchValue = false;
   DateTime currentTime = DateTime.now();
+  DateTime? now;
+  String remainedTime = '';
   int? remainedMinutes;
   int? intervalMinutes;
+  Box<ModelPrayingTimes> box = Boxes.getTime();
 
   List<String>? times;
-  List<String> names = ['Quyosh', 'Bomdod', 'Peshin', 'Asr', 'Shom', 'Xufton'];
+  List<String> names = ['Bomdod', 'Quyosh', 'Peshin', 'Asr', 'Shom', 'Xufton'];
   DateFormat formatTime = DateFormat("Hm");
+  late int t1;
 
   @override
   void initState() {
-    var nowString = "${currentTime.hour}:${currentTime.minute}";
-
-    DateTime now = stringToDateTime(nowString);
-
-    times = widget.today.times!.toJson().values.cast<String>().toList();
-    late int t1;
-
-    for (var time in times!) {
-      DateTime t = stringToDateTime(time);
-      now.isAfter(t) ? t1 = times!.indexOf(time) : null;
-    }
-
-    timeDifference(times![t1], times![t1 + 1]);
-    print(names[t1]);
-  }
-
-  stringToDateTime(String text) {
-    DateFormat format = DateFormat("HH:mm");
-    return format.parse(text);
-  }
-
-  timeDifference(String from, String to) {
-    DateFormat format = DateFormat("HH:mm");
-
-    var start = format.parse(from);
-    var end = format.parse(to);
-    var nowString = "${currentTime.hour}:${currentTime.minute}";
-    var now = format.parse(nowString);
-
-    Duration diff = end.difference(start);
-
-    Duration difToPray = end.difference(now);
-
-    remainedMinutes = difToPray.inMinutes;
-    intervalMinutes = diff.inMinutes;
-
-    if (!(intervalMinutes! >= remainedMinutes!)) {
-      intervalMinutes = intervalMinutes! + 1;
-    }
-    print(intervalMinutes);
-    print(remainedMinutes);
-
-    return diff.inHours;
+    rebuildDates();
   }
 
   @override
@@ -77,7 +40,7 @@ class _CountdownPageState extends State<CountdownPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Countdown",
+          "Joriy Nomoz Vaqti",
           style: TextStyle(fontSize: ConstantSizes.app_bar_size),
         ),
         automaticallyImplyLeading: false,
@@ -119,16 +82,16 @@ class _CountdownPageState extends State<CountdownPage> {
                             color: Colors.black,
                           ),
                           Text(
-                            "12:44",
+                            remainedTime,
                             style: TextStyle(
                                 fontSize: ConstantSizes.header_second_size,
                                 fontWeight: FontWeight.w600),
                             maxLines: 1,
                           ),
                           Text(
-                            "Mins Remaining for Iftar",
+                            names[t1],
                             style: TextStyle(
-                              fontSize: ConstantSizes.header_third_size,
+                              fontSize: 26,
                               color: ConstantColors.bottom_text_color,
                             ),
                             maxLines: 2,
@@ -189,5 +152,109 @@ class _CountdownPageState extends State<CountdownPage> {
         ),
       ),
     );
+  }
+
+  String time1 = "";
+  String time2 = "";
+
+  ertangiXuftonvaBomdodVaqti() {
+    for (var i = 0; i < box.values.toList().length; i++) {
+      if (box.values.toList()[i] == widget.today) {
+        time2 = box.values.toList()[i + 1].times!.tongSaharlik.toString();
+      }
+      time1 = widget.today.times!.tongSaharlik.toString();
+    }
+  }
+
+  Future<int> getDifference(String time1, String time2) async {
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+
+    String _today = dateFormat.format(currentTime).split(" ")[0];
+    String _tomorrow =
+        currentTime.add(const Duration(days: 1)).toString().split(" ")[0];
+
+    DateTime a = DateTime.parse('$_today $time1:00');
+    DateTime b = DateTime.parse('$_tomorrow $time2:00');
+
+    Duration diff = b.difference(a);
+    Duration difToPray = b.difference(currentTime);
+    // * ularni stringga o'tkazamiz
+    String hours = difToPray.inHours.toString();
+    String minutes = (difToPray.inMinutes % 60).toString();
+    //?-> Jami min dagi vaqtni 60 ga bo'lsak soatlardan ortib qolgani chiqadi
+
+    // *Ekranga ko'rsatiluvchi vaqt
+    remainedTime =
+        "${hours.length == 1 ? '0' + hours : hours}:${minutes.length == 1 ? '0' + minutes : minutes}";
+    // *Circular progress ni jami hajmi va tugagan qismlari
+    remainedMinutes = difToPray.inMinutes;
+    intervalMinutes = diff.inMinutes;
+
+    return b.difference(a).inHours;
+  }
+
+// 'Quyosh',
+// * Keyingi nomozga qancha vaqt qolganligini aniqlab beradi
+  rebuildDates() {
+    // * bugungi nomoz vaqtlari -> Listga
+    times = widget.today.times!.toJson().values.cast<String>().toList();
+    print(times);
+    // * Ayni vaqtda qaysi nomoz vaqtlari orasida turganimizni aniqlaydi
+    String _date = currentTime.toString().split(" ")[0];
+    String nomoz_sanasi = widget.today.date.toString().split(" ")[0];
+
+    for (var time in times!) {
+      DateTime t = DateTime.parse('$_date $time:00');
+      if (currentTime.difference(t).inSeconds < 0) {
+        t1 = times!.indexOf(time);
+        break;
+      }
+    }
+    // *  Necha soat va necha minut vaqt qolganiligini hisoblab beruvchi funksiyaga qiymatlarni jo'natamiz
+
+    if (t1 == names.indexOf(names.last)) {
+      ertangiXuftonvaBomdodVaqti();
+      getDifference(time1, time2);
+    } else {
+      if (t1 == 0) {
+        timeDifference(stringToDateTime("00:00"), stringToDateTime(times![t1]));
+      } else {
+        timeDifference(
+            stringToDateTime(times![t1]), stringToDateTime(times![t1 + 1]));
+      }
+    }
+  }
+
+// * String -> DateTime
+  stringToDateTime(String text) {
+    DateFormat format = DateFormat("HH:mm");
+    return format.parse(text);
+  }
+
+  // * DatetimeFormat
+  String dateTimeFormat(DateTime date) {
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+
+    return dateFormat.format(date);
+  }
+
+  timeDifference(DateTime from, DateTime to) {
+    // * joriy vaqt -> DateTime
+    var nowString = "${currentTime.hour}:${currentTime.minute}";
+    DateTime hozir = stringToDateTime(nowString);
+    // * Ikki vaqt oralig'idagi farqni aniqlaymiz
+
+    Duration diff = to.difference(from);
+    Duration difToPray = to.difference(hozir);
+    // * ularni stringga o'tkazamiz
+    String hours = difToPray.inHours.toString();
+    String minutes = (difToPray.inMinutes % 60).toString();
+    //?-> Jami min dagi vaqtni 60 ga bo'lsak soatlardan ortib qolgani chiqadi
+
+    // *Ekranga ko'rsatiluvchi vaqt
+    remainedTime = "$hours:${minutes.length == 1 ? '0' + minutes : minutes}";
+    // *Circular progress ni jami hajmi va tugagan qismlari
+    remainedMinutes = difToPray.inMinutes;
+    intervalMinutes = diff.inMinutes;
   }
 }

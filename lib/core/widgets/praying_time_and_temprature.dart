@@ -29,16 +29,28 @@ class PrayTime_Tempr extends StatelessWidget {
         ),
         Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.w600,
           ),
         ),
-        Text(
-          "in $time hrs",
-          style: TextStyle(
-              fontSize: ConstantSizes.header_third_size,
-              color: ConstantColors.bottom_text_color),
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: "Soat: ",
+                style: TextStyle(
+                    fontSize: ConstantSizes.header_third_size,
+                    color: ConstantColors.bottom_text_color),
+              ),
+              TextSpan(
+                text: "$time",
+                style: TextStyle(
+                    fontSize: ConstantSizes.header_second_size,
+                    color: ConstantColors.bottom_text_color),
+              ),
+            ],
+          ),
         ),
       ],
     );
