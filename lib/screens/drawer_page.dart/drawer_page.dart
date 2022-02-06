@@ -28,25 +28,28 @@ class DrawerPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             children: [
-              ContainerDecoration(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Nomoz vaqtlari(taqvim)",
-                        style: TextStyle(
-                            fontSize: ConstantSizes.header_third_size,
-                            fontWeight: FontWeight.w500),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+              InkWell(
+                onTap: () => Navigator.pushNamed(context, "/nomoz_vaqtlari"),
+                child: ContainerDecoration(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "Nomoz vaqtlari(taqvim)",
+                          style: TextStyle(
+                              fontSize: ConstantSizes.header_third_size,
+                              fontWeight: FontWeight.w500),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       ),
-                    ),
-                    const Icon(Icons.arrow_forward_ios_outlined),
-                  ],
+                      const Icon(Icons.arrow_forward_ios_outlined),
+                    ],
+                  ),
+                  height: getHeight(80),
+                  width: double.infinity,
                 ),
-                height: getHeight(80),
-                width: double.infinity,
               ),
               SizedBox(
                 height: getHeight(15),

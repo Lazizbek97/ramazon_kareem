@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               iconSize: 30,
                             ),
                             Text(
-                              "Ramadan Kareem",
+                              "Ramazoni Karim",
                               style: TextStyle(
                                 fontSize: ConstantSizes.hearder_one_size,
                                 fontWeight: FontWeight.bold,

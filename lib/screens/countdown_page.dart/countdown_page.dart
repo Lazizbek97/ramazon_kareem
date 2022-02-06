@@ -28,7 +28,7 @@ class _CountdownPageState extends State<CountdownPage> {
   List<String>? times;
   List<String> names = ['Bomdod', 'Quyosh', 'Peshin', 'Asr', 'Shom', 'Xufton'];
   DateFormat formatTime = DateFormat("Hm");
-  late int t1;
+  int? vaqtim1;
 
   @override
   void initState() {
@@ -89,7 +89,7 @@ class _CountdownPageState extends State<CountdownPage> {
                             maxLines: 1,
                           ),
                           Text(
-                            names[t1],
+                            names[vaqtim1!],
                             style: TextStyle(
                               fontSize: 26,
                               color: ConstantColors.bottom_text_color,
@@ -205,28 +205,35 @@ class _CountdownPageState extends State<CountdownPage> {
 
     for (var time in times!) {
       DateTime t = DateTime.parse('$_date $time:00');
+      print(currentTime.difference(t).inSeconds);
       if (currentTime.difference(t).inSeconds < 0) {
-        t1 = times!.indexOf(time);
-        print(t1);
+        vaqtim1 = times!.indexOf(time);
+        print(vaqtim1);
+        print("safaiofjaeofehru ");
+
         break;
       }
     }
+    if (vaqtim1 == null) {
+      vaqtim1 = names.indexOf(names.last);
+    }
     // *  Necha soat va necha minut vaqt qolganiligini hisoblab beruvchi funksiyaga qiymatlarni jo'natamiz
 
-    if (t1 == names.indexOf(names.last)) {
+    if (vaqtim1 == names.indexOf(names.last)) {
       ertangiXuftonvaBomdodVaqti();
       getDifference(time1, time2);
       print("1 part");
     } else {
-      if (t1 == 0) {
-        timeDifference(stringToDateTime("00:00"), stringToDateTime(times![t1]));
+      if (vaqtim1 == 0) {
+        timeDifference(
+            stringToDateTime("00:00"), stringToDateTime(times![vaqtim1!]));
         print("2 part");
       } else {
-        timeDifference(
-            stringToDateTime(times![t1 - 1]), stringToDateTime(times![t1]));
+        timeDifference(stringToDateTime(times![vaqtim1! - 1]),
+            stringToDateTime(times![vaqtim1!]));
         print("3 part");
-        print("${times![t1 - 1]}");
-        print("${times![t1]}");
+        print("${times![vaqtim1! - 1]}");
+        print(times![vaqtim1!]);
       }
     }
   }

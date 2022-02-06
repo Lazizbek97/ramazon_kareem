@@ -75,7 +75,7 @@ class _AzonTimesState extends State<AzonTimes> {
           ],
         ),
         Text(
-          "Azan",
+          "Azon",
           style: TextStyle(
             fontSize: ConstantSizes.header_second_size,
             fontWeight: FontWeight.bold,
