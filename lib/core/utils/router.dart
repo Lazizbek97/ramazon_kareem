@@ -5,6 +5,7 @@ import 'package:ramazo_taqvim/core/models/quran_model/quran_model.dart';
 import 'package:ramazo_taqvim/core/utils/exporting_packages.dart';
 import 'package:ramazo_taqvim/screens/countdown_page.dart/countdown_page.dart';
 import 'package:ramazo_taqvim/screens/ismlar_page/ismlar_page.dart';
+import 'package:ramazo_taqvim/screens/location_page/location_page.dart';
 import 'package:ramazo_taqvim/screens/muborak_days/muborak_kunlar.dart';
 import 'package:ramazo_taqvim/screens/qibla_page/qibla_page.dart';
 import 'package:ramazo_taqvim/screens/quran/quran_page.dart';
@@ -45,6 +46,10 @@ class RouterGenerator {
         return MaterialPageRoute(
           builder: (context) => QiblaPage(),
         );
+      // case "/location":
+      //   return MaterialPageRoute(
+      //     builder: (context) => LocationSearchPage(),
+      //   );
       case "/sura":
         List arguments = args as List;
         return MaterialPageRoute(

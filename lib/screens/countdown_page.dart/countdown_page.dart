@@ -207,6 +207,7 @@ class _CountdownPageState extends State<CountdownPage> {
       DateTime t = DateTime.parse('$_date $time:00');
       if (currentTime.difference(t).inSeconds < 0) {
         t1 = times!.indexOf(time);
+        print(t1);
         break;
       }
     }
@@ -215,12 +216,17 @@ class _CountdownPageState extends State<CountdownPage> {
     if (t1 == names.indexOf(names.last)) {
       ertangiXuftonvaBomdodVaqti();
       getDifference(time1, time2);
+      print("1 part");
     } else {
       if (t1 == 0) {
         timeDifference(stringToDateTime("00:00"), stringToDateTime(times![t1]));
+        print("2 part");
       } else {
         timeDifference(
-            stringToDateTime(times![t1]), stringToDateTime(times![t1 + 1]));
+            stringToDateTime(times![t1 - 1]), stringToDateTime(times![t1]));
+        print("3 part");
+        print("${times![t1 - 1]}");
+        print("${times![t1]}");
       }
     }
   }
