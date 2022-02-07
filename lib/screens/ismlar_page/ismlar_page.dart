@@ -1,15 +1,4 @@
-import 'package:flash_card/flash_card.dart';
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
-import 'package:ramazo_taqvim/core/models/ismlar_model/ismlar_model.dart';
-import 'package:ramazo_taqvim/core/network/service_ismlar.dart';
-import 'package:ramazo_taqvim/core/utils/constants.dart';
-import 'package:ramazo_taqvim/core/utils/size_config.dart';
-import 'package:ramazo_taqvim/core/widgets/container_decoration.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-
-import 'components/card_about_part.dart';
+import '../../core/utils/exporting_packages.dart';
 
 class IsmlarPage extends StatefulWidget {
   const IsmlarPage({Key? key}) : super(key: key);

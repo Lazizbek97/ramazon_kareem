@@ -1,6 +1,5 @@
-import 'dart:convert';
+import 'package:ramazo_taqvim/core/utils/exporting_packages.dart';
 
-import 'package:ramazo_taqvim/core/models/ismlar_model/ismlar_model.dart';
 import 'package:http/http.dart' as http;
 
 class ServiceOllohIsmlari {

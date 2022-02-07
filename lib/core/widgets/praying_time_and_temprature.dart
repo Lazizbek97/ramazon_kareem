@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ramazo_taqvim/core/utils/constants.dart';
+import '../../core/utils/exporting_packages.dart';
 
 class PrayTime_Tempr extends StatelessWidget {
   PrayTime_Tempr({

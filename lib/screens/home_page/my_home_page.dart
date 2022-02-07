@@ -1,15 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
-import 'package:ramazo_taqvim/core/models/alarms/alarms.dart';
-import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';
-import 'package:ramazo_taqvim/core/network/service_praying_times.dart';
-import 'package:ramazo_taqvim/core/utils/constants.dart';
-import 'package:ramazo_taqvim/core/utils/size_config.dart';
-import 'package:ramazo_taqvim/core/widgets/azon_time_container.dart';
-import 'package:ramazo_taqvim/core/widgets/container_decoration.dart';
-import 'package:ramazo_taqvim/core/widgets/iftar_saher_container.dart';
-import 'package:ramazo_taqvim/screens/drawer_page.dart/drawer_page.dart';
+import '../../core/utils/exporting_packages.dart';
 import 'package:intl/intl.dart';
 
 class MyHomePage extends StatefulWidget {

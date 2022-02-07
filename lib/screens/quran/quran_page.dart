@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
-import 'package:ramazo_taqvim/core/models/quran_model/quran_in_arabian.dart';
-import 'package:ramazo_taqvim/core/models/quran_model/quran_model.dart';
-import 'package:ramazo_taqvim/core/network/service_quran.dart';
-import 'package:ramazo_taqvim/core/utils/constants.dart';
+import '../../core/utils/exporting_packages.dart';
 
 class QuranPage extends StatefulWidget {
   const QuranPage({Key? key}) : super(key: key);

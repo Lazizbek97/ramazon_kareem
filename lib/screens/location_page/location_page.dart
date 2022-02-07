@@ -1,11 +1,4 @@
-//import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
-import 'package:ramazo_taqvim/core/data/locations.dart';
-import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';
-import 'package:ramazo_taqvim/core/network/service_praying_times.dart';
+import '../../core/utils/exporting_packages.dart';
 
 class LocationSearchPage extends SearchDelegate {
   Box<ModelPrayingTimes> pray_times = Boxes.getTime();

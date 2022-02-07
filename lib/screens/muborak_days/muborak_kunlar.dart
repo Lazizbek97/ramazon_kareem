@@ -1,8 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
-import 'package:ramazo_taqvim/core/data/offline_data.dart';
-import 'package:ramazo_taqvim/core/utils/constants.dart';
-import 'package:ramazo_taqvim/core/utils/size_config.dart';
+import '../../core/utils/exporting_packages.dart';
 
 class MuborakKunlarPage extends StatefulWidget {
   const MuborakKunlarPage({Key? key}) : super(key: key);

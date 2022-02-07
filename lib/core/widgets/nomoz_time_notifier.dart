@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
-import 'package:ramazo_taqvim/core/models/alarms/alarms.dart';
-import 'package:ramazo_taqvim/core/notifications/set_notifications.dart';
-import 'package:ramazo_taqvim/core/utils/constants.dart';
-import 'package:ramazo_taqvim/core/utils/size_config.dart';
-import 'package:ramazo_taqvim/core/widgets/azon_time_container.dart';
+import '../../core/utils/exporting_packages.dart';
 
 class Nomoz_Time_Notifier extends StatefulWidget {
   Nomoz_Time_Notifier({

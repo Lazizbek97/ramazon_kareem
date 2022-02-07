@@ -1,13 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import '../../core/utils/exporting_packages.dart';
 import 'package:intl/intl.dart';
-import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
-import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';
-import 'package:ramazo_taqvim/core/utils/constants.dart';
-import 'package:ramazo_taqvim/core/utils/size_config.dart';
-import 'package:ramazo_taqvim/core/widgets/container_decoration.dart';
-import 'package:ramazo_taqvim/core/widgets/praying_time_and_temprature.dart';
-import 'package:circular_countdown/circular_countdown.dart';
 
 class CountdownPage extends StatefulWidget {
   CountdownPage({Key? key, required this.today}) : super(key: key);

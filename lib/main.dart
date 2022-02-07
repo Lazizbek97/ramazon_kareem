@@ -1,9 +1,4 @@
-import 'dart:io';
 import 'package:timezone/data/latest.dart' as tz;
-import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:ramazo_taqvim/core/data/hive_initialize.dart';
-import 'package:ramazo_taqvim/core/utils/router.dart';
 import 'core/utils/exporting_packages.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 

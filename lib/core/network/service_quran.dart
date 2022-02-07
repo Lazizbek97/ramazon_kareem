@@ -1,12 +1,5 @@
-import 'dart:convert';
+import 'package:ramazo_taqvim/core/utils/exporting_packages.dart';
 
-import 'package:dio/dio.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
-import 'package:ramazo_taqvim/core/data/hive_initialize.dart';
-import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';
-import 'package:ramazo_taqvim/core/models/quran_model/quran_in_arabian.dart';
-import 'package:ramazo_taqvim/core/models/quran_model/quran_model.dart';
 import 'package:http/http.dart' as http;
 
 class ServiceQuran {

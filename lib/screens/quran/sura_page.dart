@@ -1,10 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
-import 'package:ramazo_taqvim/core/models/quran_model/quran_in_arabian.dart';
-import 'package:ramazo_taqvim/core/models/quran_model/quran_model.dart';
-import 'package:ramazo_taqvim/core/utils/constants.dart';
-import 'package:ramazo_taqvim/core/utils/size_config.dart';
-import 'package:ramazo_taqvim/core/widgets/container_decoration.dart';
+import '../../core/utils/exporting_packages.dart';
 
 class SuraPage extends StatelessWidget {
   SuraPage({

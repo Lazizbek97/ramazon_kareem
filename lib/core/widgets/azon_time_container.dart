@@ -1,14 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
+import '../../core/utils/exporting_packages.dart';
+
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:hive/hive.dart';
-import 'package:ramazo_taqvim/core/data/hive_boxes.dart';
-import 'package:ramazo_taqvim/core/models/alarms/alarms.dart';
-import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';
-import 'package:ramazo_taqvim/core/notifications/set_notifications.dart';
-import 'package:ramazo_taqvim/core/utils/constants.dart';
-import 'package:ramazo_taqvim/core/widgets/nomoz_time_notifier.dart';
 
 class AzonTimes extends StatefulWidget {
   AzonTimes({

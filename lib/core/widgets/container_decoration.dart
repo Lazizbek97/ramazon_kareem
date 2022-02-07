@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:ramazo_taqvim/core/utils/size_config.dart';
+import '../../core/utils/exporting_packages.dart';
 
 class ContainerDecoration extends StatelessWidget {
   ContainerDecoration({

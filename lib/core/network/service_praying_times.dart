@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
-
-import 'package:ramazo_taqvim/core/models/nomoz_times_model/model_praying_times.dart';
+import 'package:ramazo_taqvim/core/utils/exporting_packages.dart';
 
 class ServicePrayingTimes {
   static Future<List<ModelPrayingTimes>> getTimes(String viloyat) async {

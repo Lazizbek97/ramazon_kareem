@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:ramazo_taqvim/core/utils/constants.dart';
+import '../../core/utils/exporting_packages.dart';
 
 class QiblaPage extends StatefulWidget {
   const QiblaPage({Key? key}) : super(key: key);
