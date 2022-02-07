@@ -15,19 +15,27 @@ class SetNotifications {
       joriy_nomoz_vaqti.year,
       joriy_nomoz_vaqti.month,
       joriy_nomoz_vaqti.day,
-      joriy_nomoz_vaqti.hour,
-      joriy_nomoz_vaqti.minute,
+      00,
+      10,
     );
-
-    print(newNotification);
-
-    Notifications.showNotificationScheduledDailyBasis(
-      id: id,
-      title: title,
-      body: body,
-      payload: payload,
-      scheduledDate: newNotification,
-    );
+    if (today.isBefore(newNotification)) {
+      Notifications.showNotificationScheduledDailyBasis(
+        id: id,
+        title: title,
+        body: body,
+        payload: payload,
+        scheduledDate: newNotification,
+      );
+    } else {
+      newNotification = newNotification.add(const Duration(days: 1));
+      Notifications.showNotificationScheduledDailyBasis(
+        id: id,
+        title: title,
+        body: body,
+        payload: payload,
+        scheduledDate: newNotification,
+      );
+    }
   }
 
 // ? Delete Notifications

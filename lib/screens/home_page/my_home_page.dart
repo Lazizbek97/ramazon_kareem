@@ -1,3 +1,5 @@
+import 'package:ramazo_taqvim/core/notifications/nomoz_alarm.dart';
+
 import '../../core/utils/exporting_packages.dart';
 import 'package:intl/intl.dart';
 
@@ -19,6 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
+    Notifications.init(initScheduled: true);
     // * Hive Alarm Box checking
 
     checkAlarmBox();

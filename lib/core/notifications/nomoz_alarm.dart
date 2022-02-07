@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -43,26 +44,15 @@ class Notifications {
         "channelName",
         channelDescription: "channel description",
         importance: Importance.max,
+        priority: Priority.high,
+        ongoing: true,
+        styleInformation: BigTextStyleInformation(""),
+        playSound: true,
+        color: Colors.yellow,
       ),
       iOS: IOSNotificationDetails(),
     );
   }
-
-// ! What user see on Notification are all here
-// ? Notification When user pressed a button
-  static showNotification({
-    int id = 0,
-    String? title,
-    String? body,
-    String? payload,
-  }) async =>
-      _notification.show(
-        id,
-        title,
-        body,
-        await _notificationDetails(),
-        payload: payload,
-      );
 
 // ? Notification when user set a time in the future
 
@@ -87,26 +77,22 @@ class Notifications {
       );
 
 // ? Notifacations Daily Basis
-// TODO berilgan kunning vaqtiga notification qo'yish zarur!!!!
+
   static showNotificationScheduledDailyBasis({
-    int id = 0,
+    int? id,
     String? title,
     String? body,
     String? payload,
     required DateTime scheduledDate,
   }) async =>
       _notification.zonedSchedule(
-        // * Argumentlarinig positsiyasi MUHIM!
-        id,
+        id!,
         title,
         body,
+
         // * dailyNotifications
         await tz.TZDateTime(tz.local, scheduledDate.year, scheduledDate.month,
-            scheduledDate.hour, scheduledDate.minute),
-        // ),
-        // * weeklyNOtifications
-        // await _weeklySchedule(Time(11),
-        // days: [DateTime.monday, DateTime.tuesday]),
+            scheduledDate.day, scheduledDate.hour, scheduledDate.minute),
 
         await _notificationDetails(),
         payload: payload,
@@ -114,33 +100,10 @@ class Notifications {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         // * DailySchedule
-        matchDateTimeComponents: DateTimeComponents.time,
+        // matchDateTimeComponents: DateTimeComponents.time,
         // * WeeklySchedule
         // matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
       );
-
-  // ? yordamchi funksiyalar | tepada chaqirib ishlatilgan
-  static tz.TZDateTime _scheduleDaily(Time time) {
-    final now = tz.TZDateTime.now(tz.local);
-    final scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, now.day,
-        time.hour, time.minute, time.second);
-    return scheduledDate.isBefore(now)
-        ? scheduledDate.add(
-            Duration(seconds: 15),
-          )
-        : scheduledDate;
-  }
-
-  static tz.TZDateTime _weeklySchedule(Time time, {required List<int> days}) {
-    tz.TZDateTime scheduledDate = _scheduleDaily(time);
-
-    while (!days.contains(scheduledDate.weekday)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
-    }
-    return scheduledDate;
-  }
-
-  // ? Cancel Specific Notifications
 
   static cancelNotification(int id) async {
     await _notification.cancel(id);
